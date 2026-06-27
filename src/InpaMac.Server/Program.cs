@@ -195,8 +195,8 @@ app.MapGet("/api/state", async (string? port, string? sgbd) =>
                     }
         }
         catch { }
-        // no KL15 but engine-level volts: infer ignition on
-        if (ign == null && bat != null) ign = bat > 6.0;
+        // if KL15 couldn't be read, leave ignition unknown. don't infer from
+        // voltage: the DME reports >6V with the key off too, so it would lie.
 
         return Results.Json(new { battery = bat, ignition = ign, connected = true });
     }
