@@ -1,0 +1,33 @@
+# Vendored BMW binaries and ECU data are large and proprietary, do not commit.
+# Exception: ms45-flasher is open source (GPLv3) and the flash code is ported from it.
+vendor/*
+!vendor/ms45-flasher/
+vendor/ms45-flasher/.git/
+# .NET build output
+bin/
+obj/
+*.user
+# Node / Electron
+node_modules/
+app/server-dist/
+
+# Mac
+.DS_Store
+
+# Release builds
+dist-release/
+app/dist-release/
+
+# Derived/proprietary data: INPA-mined layouts, RE anchors tied to a flash dump,
+# pasted reference lists. Generated locally from vendor data; not shipped.
+data/
+
+# Filled workflow scripts (contain large embedded ECU lists)
+tools/*.filled.mjs
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Workflow scripts (throwaway, contain absolute paths)
+tools/*.mjs

@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EdiabasMac/EdiabasMac.csproj" />
+    <Project Path="src/InpaMac.Cli/InpaMac.Cli.csproj" />
+    <Project Path="src/InpaMac.Server/InpaMac.Server.csproj" />
+  </Folder>
+</Solution>

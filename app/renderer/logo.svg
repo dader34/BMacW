@@ -1,0 +1,15 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BMacW logo">
+  <!-- outer ring -->
+  <circle cx="50" cy="50" r="48" fill="#11161c" stroke="#9aa6b2" stroke-width="3"/>
+  <!-- inner quadrant disc -->
+  <clipPath id="disc"><circle cx="50" cy="50" r="31"/></clipPath>
+  <g clip-path="url(#disc)">
+    <!-- white quadrants: top-left, bottom-right -->
+    <rect x="19" y="19" width="31" height="31" fill="#eef2f5"/>
+    <rect x="50" y="50" width="31" height="31" fill="#eef2f5"/>
+    <!-- amber quadrants: top-right, bottom-left (app orange in place of BMW blue) -->
+    <rect x="50" y="19" width="31" height="31" fill="#ff9e2c"/>
+    <rect x="19" y="50" width="31" height="31" fill="#ff9e2c"/>
+  </g>
+  <circle cx="50" cy="50" r="31" fill="none" stroke="#0a0d11" stroke-width="2"/>
+</svg>

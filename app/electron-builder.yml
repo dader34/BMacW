@@ -1,0 +1,50 @@
+appId: com.bmacw.app
+productName: BMacW
+copyright: BMacW, native macOS BMW diagnostics
+
+directories:
+  output: ../dist-release
+  buildResources: .
+
+# What goes inside the app's app.asar (the Electron front-end).
+files:
+  - main.js
+  - preload.js
+  - renderer/**/*
+  - icon.png
+
+# Self-contained extras placed under Contents/Resources:
+#  - server-dist : the published .NET engine (single self-contained binary)
+#  - data        : the EDIABAS/INPA data the engine reads (BMACW_ROOT/vendor, /tools)
+extraResources:
+  - from: server-dist
+    to: server-dist
+  - from: ../vendor/EDIABAS
+    to: data/vendor/EDIABAS
+  - from: ../vendor/EC-APPS
+    to: data/vendor/EC-APPS
+  - from: ../tools/translations
+    to: data/tools/translations
+
+mac:
+  category: public.app-category.utilities
+  icon: icon.icns
+  target:
+    - target: dmg
+      arch:
+        - arm64
+  # Unsigned local build (no Apple Developer account). Ad-hoc sign so it runs
+  # after the user clears quarantine (right-click → Open).
+  identity: null
+
+dmg:
+  title: BMacW
+  # drag-to-Applications layout
+  contents:
+    - x: 130
+      y: 220
+      type: file
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications

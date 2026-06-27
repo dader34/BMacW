@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMacW</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="themes.css" />
+</head>
+<body>
+  <!-- grain + scanline overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <!-- custom controls, window is frameless. macOS traffic-light layout -->
+    <div class="win-controls" id="win-controls">
+      <button class="win-dot win-close"  id="win-close"  title="Close" aria-label="Close"></button>
+      <button class="win-dot win-min"    id="win-min"    title="Minimize" aria-label="Minimize"></button>
+      <button class="win-dot win-zoom"   id="win-zoom"   title="Zoom" aria-label="Zoom"></button>
+    </div>
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BMacW logo">
+        <!-- outer ring -->
+        <circle class="logo-ring" cx="50" cy="50" r="48" />
+        <!-- inner quadrant disc -->
+        <clipPath id="disc"><circle cx="50" cy="50" r="31"/></clipPath>
+        <g clip-path="url(#disc)">
+          <!-- white quadrants: top-left, bottom-right -->
+          <rect class="logo-quad-white" x="19" y="19" width="31" height="31" />
+          <rect class="logo-quad-white" x="50" y="50" width="31" height="31" />
+          <!-- color quadrants: top-right, bottom-left -->
+          <rect class="logo-quad-color" x="50" y="19" width="31" height="31" />
+          <rect class="logo-quad-color" x="19" y="50" width="31" height="31" />
+        </g>
+        <circle class="logo-inner-ring" cx="50" cy="50" r="31" />
+      </svg>
+      <span class="brand-name">BMacW</span>
+    </div>
+    <nav class="breadcrumbs" id="crumbs"></nav>
+    <div class="topbar-right">
+      <!-- Battery (KL30) + Ignition (KL15) state, INPA top indicators -->
+      <div class="kl-state" id="kl-state" title="Battery / Ignition">
+        <span class="kl"><span class="kl-led" id="bat-led"></span><span class="kl-lbl">Battery</span><span class="kl-val" id="bat-val">--</span></span>
+        <span class="kl"><span class="kl-led" id="ign-led"></span><span class="kl-lbl">Ignition</span><span class="kl-val" id="ign-val">--</span></span>
+      </div>
+      <div class="status" id="link-status">
+        <span class="led" id="led"></span>
+        <span id="link-text">checking cable...</span>
+      </div>
+      <button class="icon-btn" id="flash-btn" title="Flashing">Flashing</button>
+      <button class="icon-btn" id="settings-btn" title="Settings">Settings</button>
+    </div>
+  </header>
+
+  <main id="view" class="view"></main>
+
+  <footer class="fkeybar" id="fkeybar">
+    <div class="fkeys" id="fkeys"></div>
+    <div class="fkeybar-status"><span id="sb-left">ready</span><span id="sb-right"></span></div>
+  </footer>
+
+  <script src="faultdb.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
