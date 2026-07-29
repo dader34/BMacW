@@ -1,0 +1,49 @@
+name: Edit release notes
+
+# One-off helper: pushes to this throwaway branch rewrite the v0.8.0 release
+# body from notes below. Not for main.
+on:
+  push:
+    branches: ['ci/notes']
+
+permissions:
+  contents: write
+
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rewrite v0.8.0 release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > notes.md <<'EOF'
+          ## INPA `.IPO` decompiler
+
+          - Cracked the compiled INPA `.IPO` screen format (a stack bytecode), using BMW's own `MUST_EXX.SRC` / `MUST_EXX.IPO` source-template pair as a Rosetta stone. `tools/ipo_disasm.py` is a real disassembler that replaces the previous regex "mining".
+          - Fleet-scale, read-only screen extraction: a generic decoder + recogniser over 763 `.IPO` files (514 decodable — 11,305 fields, 19,703 softkeys). Undecodable containers are left alone rather than guessed; actuator/adaptation write arguments are carried as unverified and never emitted as runnable.
+          - In-app interpreter renders INPA's own menus and screens straight from the decompiled data (`app/renderer/ir.js`, `GET /api/ecu/{sgbd}/ir`), reusing the existing live poller. Activation jobs are resolved from bytecode call-sites instead of caption matching.
+
+          ## Full E46 translation
+
+          - Every E46 module INPA names and ships an `.IPO` for (13 modules) now renders entirely in English through the interpreter — menus, titles, line captions and rows — translated individually rather than by rule.
+
+          ## Rendering & robustness
+
+          - Fixed a crash that took out 11 ECUs' entire UI.
+          - Gauge scale / warning-band / caption-pairing corrections; softkey rows shown one at a time (Shift-swapped) as INPA does; numeric booleans shown as on/off; various "no job mapped" entries now resolve to their real jobs or submenus.
+
+          ## Release tooling
+
+          - The macOS DMG is now built and published automatically by CI on a `v*` tag (native `dotnet publish`, BMW data bundled into `Resources/data`, ad-hoc codesigned, wrapped with `hdiutil`).
+
+          ## Install
+
+          Unsigned build (no Apple Developer account). After moving the app to Applications, clear quarantine once:
+
+          ```
+          xattr -dr com.apple.quarantine /Applications/BMacW.app
+          ```
+          EOF
+          gh release edit v0.8.0 --repo "${{ github.repository }}" --notes-file notes.md
+          echo "Updated v0.8.0 notes."
