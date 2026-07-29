@@ -17,12 +17,19 @@ permissions:
 
 jobs:
   dmg:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout with Git LFS (SGBDs and IPOs the app bundles)
         uses: actions/checkout@v4
         with:
           lfs: true
+
+      - name: Select the newest installed Xcode (workload needs a recent Swift toolchain)
+        run: |
+          latest=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -1)
+          echo "Selecting $latest"
+          sudo xcode-select -s "$latest/Contents/Developer"
+          xcodebuild -version
 
       - name: Set up .NET 10
         uses: actions/setup-dotnet@v4
