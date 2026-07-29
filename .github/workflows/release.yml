@@ -19,7 +19,7 @@ jobs:
   dmg:
     runs-on: macos-14
     steps:
-      - name: Checkout (with LFS: the SGBDs/IPOs the app bundles)
+      - name: Checkout with Git LFS (SGBDs and IPOs the app bundles)
         uses: actions/checkout@v4
         with:
           lfs: true
