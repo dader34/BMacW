@@ -9,6 +9,7 @@ name: Release DMG
 on:
   push:
     tags: ['v*']
+    branches: ['ci/dmg-test']
   workflow_dispatch:
 
 permissions:
