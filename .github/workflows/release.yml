@@ -24,14 +24,11 @@ jobs:
         with:
           lfs: true
 
-      - name: Select Xcode 16.x (matches the known-good local toolchain; 26.x is incomplete on the runner)
+      - name: Show the runner's default Xcode (macos-15 default is complete + recent enough)
         run: |
-          xc=$(ls -d /Applications/Xcode_16.*.app 2>/dev/null | sort -V | tail -1)
-          [ -n "$xc" ] || xc=$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -1)
-          echo "Selecting $xc"
-          sudo xcode-select -s "$xc/Contents/Developer"
           xcodebuild -version
-          xcrun --find install_name_tool  # fail fast if the toolchain is incomplete
+          xcrun --sdk macosx --show-sdk-version
+          xcrun --sdk macosx --find clang
 
       - name: Set up .NET 10
         uses: actions/setup-dotnet@v4
