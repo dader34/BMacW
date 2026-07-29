@@ -32,6 +32,13 @@ jobs:
       - name: Install the macOS workload
         run: dotnet workload install macos
 
+      - name: Fetch the ediabaslib engine source (gitignored; pinned commit)
+        run: |
+          git init -q vendor/ediabaslib-src
+          git -C vendor/ediabaslib-src remote add origin https://github.com/uholeschak/ediabaslib.git
+          git -C vendor/ediabaslib-src fetch -q --depth 1 origin b784044b45fd904e3b0f637a05174158be2c99ce
+          git -C vendor/ediabaslib-src checkout -q FETCH_HEAD
+
       - name: Package the DMG
         run: bash scripts/package-macos.sh
 
