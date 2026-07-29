@@ -22,7 +22,7 @@
     "A3AB": "CAN ID 190 ERROR failure message display ACC",
     "A3AC": "CAN ID 1A6 ERROR failure message Wegstrecke",
     "A3AD": "CAN ID 1D0 ERROR failure message engine data",
-    "A3AE": "CAN ID 0AA ERROR failure message speed Leerlauf",
+    "A3AE": "CAN ID 0AA error: idle engine-speed message failure",
     "A3AF": "CAN ID 200 ERROR failure message Regelgeschw Stufentempomat",
     "A3B0": "CAN ID 202 ERROR failure message dimming",
     "A3B1": "CAN ID 1F6 ERROR failure message Blinken",

@@ -107,7 +107,7 @@
     "CF16": "Message speed",
     "CF17": "Message odometer Istwert/range",
     "CF18": "Message terminal status",
-    "CF19": "Message Lenkradwinkel",
+    "CF19": "Message: steering angle",
     "CF1A": "Message wheel speed",
     "CF1B": "Message wheel tolerance adjust",
     "CF1C": "Message status trailer",
