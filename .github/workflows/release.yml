@@ -59,11 +59,22 @@ jobs:
           path: dist-release/*.dmg
           if-no-files-found: error
 
-      - name: Publish GitHub Release (tag pushes only)
-        if: github.ref_type == 'tag'
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag' || github.ref_name == 'ci/dmg-test'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ github.ref_name }}" "${{ steps.dmg.outputs.path }}" \
-            --title "${{ github.ref_name }}" \
-            --notes "Automated macOS build of ${{ github.ref_name }}. Unsigned: after install run  xattr -dr com.apple.quarantine /Applications/BMacW.app"
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            TAG="${{ github.ref_name }}"; TARGET=""
+          else
+            VER=$(grep -oE '<ApplicationDisplayVersion>[^<]+' src/InpaMac.App/InpaMac.App.csproj | head -1 | sed 's/.*>//')
+            TAG="v$VER"; TARGET="--target main"
+          fi
+          echo "Publishing release $TAG"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${{ steps.dmg.outputs.path }}" --clobber
+          else
+            gh release create "$TAG" "${{ steps.dmg.outputs.path }}" $TARGET \
+              --title "$TAG" \
+              --notes "Automated macOS build of $TAG. Unsigned: after install run  xattr -dr com.apple.quarantine /Applications/BMacW.app"
+          fi
